@@ -22,7 +22,7 @@ create table pay_wallet_log
     uid          bigint          default 0                    not null comment 'UID',
     merchant_id  bigint          default 0                    not null comment '商户id',
     wallet_id    bigint          default 0                    not null comment '钱包id',
-    category     tinyint         default 0                    not null comment '订单类型:1-存款 2-提款 3-注单 4-结算 5-返水 6-佣金 7-活动 8-调账 9-退款 10-调拨转账 11-小费',
+    category     tinyint         default 0                    not null comment '订单类型:1-存款 2-提款 3-下单 4-结算 5-返现 6-佣金 7-活动 8-调账 9-退款 10-调拨转账 11-小费',
     refer_id     varchar(64)     default ''                   not null comment '关联订单ID',
     out_in       tinyint         default 0                    not null comment '收支类型:0-支出 1-收入',
     currency     tinyint         default 1                    not null comment '币种',
