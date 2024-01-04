@@ -101,3 +101,77 @@ create index idx_stat_cdate
 create index idx_uid
     on pay_withdrawal (uid);
 
+
+create table pay_channel
+(
+    id                int auto_increment comment 'ID' primary key,
+    code              varchar(64)  default '' not null comment '渠道编码',
+    category          tinyint      default 0  not null comment '渠道类型：1-TRC,2-ERC,3-BANK',
+    name              varchar(100) default '' not null comment '渠道名称',
+    plat_id           int          default 0  not null comment '平台ID',
+    plat_name         varchar(100) default '' not null comment '平台名称',
+    plat_nick_name    varchar(100) default '' null comment '平台自定义名称',
+    payment_type      tinyint      default 0  not null comment '支付类型；1:代收 2:代付',
+    currency          tinyint      default 0 not null comment '币种',
+    min_coin          decimal(32, 18)          default 0  not null comment '最小金额',
+    max_coin          decimal(32, 18)          default 0  not null comment '最大金额',
+    status            tinyint      default 0  not null comment '状态 0-关闭 1-开启',
+    request_url       varchar(255) default '' not null comment '请求三方支付地址',
+    notify_url        varchar(255) default '' not null comment '回调地址',
+    channel_config    varchar(512) default '' null comment '渠道配置参数',
+    sort              int          default 30 null comment '排序',
+    logo_url          varchar(255) default '' null comment 'LOGO地址',
+    channel_show_name varchar(255) default '' null comment '渠道网站名称',
+    remark            varchar(255) default '' null comment '备注',
+    created_at        datetime                 null comment '创建时间',
+    updated_at        datetime                 null comment '修改时间',
+    constraint uniq_code_index unique (code)
+) comment '支付渠道配置' collate = utf8mb4_unicode_ci;
+
+
+INSERT INTO eladmin.sys_dict (dict_id, name, description) VALUES (6, 'deposit_status', '充值状态');
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES ( 6, '处理中', '0', 1);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES ( 6, '成功', '1', 2);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES ( 6, '失败', '2', 3);
+
+INSERT INTO eladmin.sys_dict (dict_id, name, description) VALUES (7, 'currency', '币种');
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (7, '美元', 'USD', 2);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (7, '美元', 'USD', 2);
+
+INSERT INTO eladmin.sys_dict (dict_id, name, description) VALUES (8, 'wallet_category', '钱包类型');
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (8, '支付', '1', 1);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (8, '游戏', '2', 2);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (8, '活动', '3', 3);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (8, '佣金', '4', 4);
+
+INSERT INTO eladmin.sys_dict (dict_id, name, description) VALUES (9, 'refer_category', '关联订单类型');
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (9, '存款', '1', 1);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (9, '提款', '2', 2);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (9, '下单', '3', 3);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (9, '结算', '4', 4);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (9, '返现', '5', 5);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (9, '佣金', '6', 6);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (9, '活动', '7', 7);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (9, '调账', '8', 8);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (9, '退款', '9', 9);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (9, '调拨转账', '10', 10);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (9, '小费', '11', 11);
+
+INSERT INTO eladmin.sys_dict (dict_id, name, description) VALUES (10, 'out_in', '收支类型');
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (10, '支出', '1',1);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (10, '收入', '2',2);
+
+INSERT INTO eladmin.sys_dict (dict_id, name, description) VALUES (11, 'withdrawal_status', '提现状态');
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (11, '待审核', '1',1);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (11, '审核通过待支付', '2',2);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (11, '已支付待三方确认', '3',3);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (11, '提款成功', '4',4);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (11, '提款失败', '5',5);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (11, '审核拒绝', '6',6);
+
+INSERT INTO eladmin.sys_dict (dict_id, name, description) VALUES (12, 'audit_type', '审核类型');
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (12, '人工', '1',1);
+INSERT INTO eladmin.sys_dict_detail (dict_id, label, value, dict_sort) VALUES (12, '自动', '2',2);
+
+
+
