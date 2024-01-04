@@ -1,8 +1,8 @@
 package me.zhengjie.modules.payment.service.mapstruct;
 
 import me.zhengjie.base.BaseMapper;
-import me.zhengjie.modules.payment.domain.PayDeposit;
-import me.zhengjie.modules.payment.service.dto.PayDepositDto;
+import me.zhengjie.modules.payment.domain.PayWithdrawal;
+import me.zhengjie.modules.payment.service.dto.PayWithdrawalDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -12,6 +12,6 @@ import org.mapstruct.ReportingPolicy;
 * @date 2024-01-05
 **/
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface PayDepositMapper extends BaseMapper<PayDepositDto, PayDeposit> {
+public interface PayWithdrawalMapper extends BaseMapper<PayWithdrawalDto, PayWithdrawal> {
 
 }

@@ -10,15 +10,7 @@ import me.zhengjie.annotation.Query;
 * @date 2024-01-05
 **/
 @Data
-public class PayDepositQueryCriteria{
-
-    /** 精确 */
-    @Query
-    private Long id;
-
-    /** 精确 */
-    @Query
-    private String platOrderId;
+public class PayWalletLogQueryCriteria{
 
     /** 精确 */
     @Query
@@ -26,15 +18,15 @@ public class PayDepositQueryCriteria{
 
     /** 精确 */
     @Query
-    private Integer status;
+    private Integer category;
+
+    /** 精确 */
+    @Query
+    private Integer outIn;
 
     /** 精确 */
     @Query
     private Integer currency;
-
-    /** 精确 */
-    @Query
-    private String channelCode;
 
     /** 精确 */
     @Query

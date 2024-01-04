@@ -14,58 +14,51 @@ import com.alibaba.fastjson.serializer.ToStringSerializer;
 * @date 2024-01-05
 **/
 @Data
-public class PayDepositDto implements Serializable {
+public class PayWalletLogDto implements Serializable {
 
-    /** 订单号 */
     /** 防止精度丢失 */
     @JSONField(serializeUsing = ToStringSerializer.class)
     private Long id;
 
-    /** 三方单号 */
-    private String platOrderId;
-
     /** UID */
     private Long uid;
-
-    /** 钱包id */
-    private Long walletId;
 
     /** 商户id */
     private Long merchantId;
 
-    /** 状态 */
-    private Integer status;
+    /** 钱包id */
+    private Long walletId;
+
+    /** 订单类型 */
+    private Integer category;
+
+    /** 收支类型 */
+    private Integer outIn;
 
     /** 币种 */
     private Integer currency;
 
-    /** 充值金额 */
-    private BigDecimal payAmount;
+    /** 金额 */
+    private BigDecimal coin;
 
-    /** 汇率 */
-    private BigDecimal exchangeRate;
+    /** 前余额 */
+    private BigDecimal coinBefore;
 
-    /** 到账金额 */
-    private BigDecimal realAmount;
-
-    /** 渠道手续费 */
-    private BigDecimal channelFee;
+    /** 后余额 */
+    private BigDecimal coinAfter;
 
     /** 渠道编码 */
     private String channelCode;
 
-    /** 渠道名称 */
-    private String channelName;
-
     /** 用户名 */
     private String username;
-
-    /** 备注 */
-    private String mark;
 
     /** 创建时间 */
     private Timestamp createTime;
 
-    /** 修改时间 */
+    /** 更新时间 */
     private Timestamp updateTime;
+
+    /** 内部订单号 */
+    private Long orderId;
 }

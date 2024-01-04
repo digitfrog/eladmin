@@ -1,22 +1,6 @@
-/*
-*  Copyright 2019-2020 Zheng Jie
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*  http://www.apache.org/licenses/LICENSE-2.0
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-*/
 package me.zhengjie.modules.payment.service.impl;
 
 import me.zhengjie.modules.payment.domain.PayDeposit;
-import me.zhengjie.exception.EntityExistException;
 import me.zhengjie.utils.ValidationUtil;
 import me.zhengjie.utils.FileUtil;
 import lombok.RequiredArgsConstructor;
@@ -42,10 +26,9 @@ import java.util.LinkedHashMap;
 import me.zhengjie.utils.PageResult;
 
 /**
-* @website https://eladmin.vip
 * @description 服务实现
-* @author mk
-* @date 2024-01-02
+* @author bryan
+* @date 2024-01-05
 **/
 @Service
 @RequiredArgsConstructor
@@ -78,9 +61,6 @@ public class PayDepositServiceImpl implements PayDepositService {
     public void create(PayDeposit resources) {
         Snowflake snowflake = IdUtil.createSnowflake(1, 1);
         resources.setId(snowflake.nextId()); 
-        if(payDepositRepository.findByOrderId(resources.getOrderId()) != null){
-            throw new EntityExistException(PayDeposit.class,"order_id",resources.getOrderId());
-        }
         payDepositRepository.save(resources);
     }
 
@@ -89,11 +69,6 @@ public class PayDepositServiceImpl implements PayDepositService {
     public void update(PayDeposit resources) {
         PayDeposit payDeposit = payDepositRepository.findById(resources.getId()).orElseGet(PayDeposit::new);
         ValidationUtil.isNull( payDeposit.getId(),"PayDeposit","id",resources.getId());
-        PayDeposit payDeposit1 = null;
-        payDeposit1 = payDepositRepository.findByOrderId(resources.getOrderId());
-        if(payDeposit1 != null && !payDeposit1.getId().equals(payDeposit.getId())){
-            throw new EntityExistException(PayDeposit.class,"order_id",resources.getOrderId());
-        }
         payDeposit.copy(resources);
         payDepositRepository.save(payDeposit);
     }
@@ -110,11 +85,10 @@ public class PayDepositServiceImpl implements PayDepositService {
         List<Map<String, Object>> list = new ArrayList<>();
         for (PayDepositDto payDeposit : all) {
             Map<String,Object> map = new LinkedHashMap<>();
-            map.put("内部单号", payDeposit.getOrderId());
             map.put("三方单号", payDeposit.getPlatOrderId());
             map.put("UID", payDeposit.getUid());
             map.put("钱包id", payDeposit.getWalletId());
-            map.put("租户id", payDeposit.getMerchantId());
+            map.put("商户id", payDeposit.getMerchantId());
             map.put("状态", payDeposit.getStatus());
             map.put("币种", payDeposit.getCurrency());
             map.put("充值金额", payDeposit.getPayAmount());

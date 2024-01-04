@@ -10,7 +10,7 @@ import me.zhengjie.annotation.Query;
 * @date 2024-01-05
 **/
 @Data
-public class PayDepositQueryCriteria{
+public class PayCodeRecordsQueryCriteria{
 
     /** 精确 */
     @Query
@@ -18,31 +18,19 @@ public class PayDepositQueryCriteria{
 
     /** 精确 */
     @Query
-    private String platOrderId;
-
-    /** 精确 */
-    @Query
     private Long uid;
 
     /** 精确 */
     @Query
-    private Integer status;
-
-    /** 精确 */
-    @Query
-    private Integer currency;
-
-    /** 精确 */
-    @Query
-    private String channelCode;
-
-    /** 精确 */
-    @Query
     private String username;
+
+    /** 精确 */
+    @Query
+    private Integer referCategory;
     /** BETWEEN */
     @Query(type = Query.Type.BETWEEN)
-    private List<Timestamp> createTime;
+    private List<Timestamp> createdAt;
     /** BETWEEN */
     @Query(type = Query.Type.BETWEEN)
-    private List<Timestamp> updateTime;
+    private List<Timestamp> updatedAt;
 }

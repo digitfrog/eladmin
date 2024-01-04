@@ -20,75 +20,67 @@ import java.io.Serializable;
 **/
 @Entity
 @Data
-@Table(name="pay_deposit")
-public class PayDeposit implements Serializable {
+@Table(name="pay_wallet_log")
+public class PayWalletLog implements Serializable {
 
     @Id
     @Column(name = "`id`")
-    @ApiModelProperty(value = "订单号")
+    @ApiModelProperty(value = "id")
     private Long id;
-
-    @Column(name = "`plat_order_id`",nullable = false)
-    @NotBlank
-    @ApiModelProperty(value = "三方单号")
-    private String platOrderId;
 
     @Column(name = "`uid`",nullable = false)
     @NotNull
     @ApiModelProperty(value = "UID")
     private Long uid;
 
-    @Column(name = "`wallet_id`")
-    @ApiModelProperty(value = "钱包id")
-    private Long walletId;
-
-    @Column(name = "`merchant_id`")
+    @Column(name = "`merchant_id`",nullable = false)
+    @NotNull
     @ApiModelProperty(value = "商户id")
     private Long merchantId;
 
-    @Column(name = "`status`",nullable = false)
+    @Column(name = "`wallet_id`",nullable = false)
     @NotNull
-    @ApiModelProperty(value = "状态")
-    private Integer status;
+    @ApiModelProperty(value = "钱包id")
+    private Long walletId;
+
+    @Column(name = "`category`",nullable = false)
+    @NotNull
+    @ApiModelProperty(value = "订单类型")
+    private Integer category;
+
+    @Column(name = "`out_in`",nullable = false)
+    @NotNull
+    @ApiModelProperty(value = "收支类型")
+    private Integer outIn;
 
     @Column(name = "`currency`",nullable = false)
     @NotNull
     @ApiModelProperty(value = "币种")
     private Integer currency;
 
-    @Column(name = "`pay_amount`",nullable = false)
+    @Column(name = "`coin`",nullable = false)
     @NotNull
-    @ApiModelProperty(value = "充值金额")
-    private BigDecimal payAmount;
+    @ApiModelProperty(value = "金额")
+    private BigDecimal coin;
 
-    @Column(name = "`exchange_rate`")
-    @ApiModelProperty(value = "汇率")
-    private BigDecimal exchangeRate;
+    @Column(name = "`coin_before`",nullable = false)
+    @NotNull
+    @ApiModelProperty(value = "前余额")
+    private BigDecimal coinBefore;
 
-    @Column(name = "`real_amount`")
-    @ApiModelProperty(value = "到账金额")
-    private BigDecimal realAmount;
-
-    @Column(name = "`channel_fee`")
-    @ApiModelProperty(value = "渠道手续费")
-    private BigDecimal channelFee;
+    @Column(name = "`coin_after`",nullable = false)
+    @NotNull
+    @ApiModelProperty(value = "后余额")
+    private BigDecimal coinAfter;
 
     @Column(name = "`channel_code`",nullable = false)
     @NotBlank
     @ApiModelProperty(value = "渠道编码")
     private String channelCode;
 
-    @Column(name = "`channel_name`")
-    @ApiModelProperty(value = "渠道名称")
-    private String channelName;
-
     @Column(name = "`username`")
     @ApiModelProperty(value = "用户名")
     private String username;
-
-    @Column(name = "`mark`")
-    @ApiModelProperty(value = "备注")
-    private String mark;
 
     @Column(name = "`create_time`")
     @CreationTimestamp
@@ -97,10 +89,15 @@ public class PayDeposit implements Serializable {
 
     @Column(name = "`update_time`")
     @UpdateTimestamp
-    @ApiModelProperty(value = "修改时间")
+    @ApiModelProperty(value = "更新时间")
     private Timestamp updateTime;
 
-    public void copy(PayDeposit source){
+    @Column(name = "`order_id`",nullable = false)
+    @NotNull
+    @ApiModelProperty(value = "内部订单号")
+    private Long orderId;
+
+    public void copy(PayWalletLog source){
         BeanUtil.copyProperties(source,this, CopyOptions.create().setIgnoreNullValue(true));
     }
 }

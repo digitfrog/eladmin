@@ -1,18 +1,3 @@
-/*
-*  Copyright 2019-2020 Zheng Jie
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*  http://www.apache.org/licenses/LICENSE-2.0
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-*/
 package me.zhengjie.modules.payment.rest;
 
 import me.zhengjie.annotation.Log;
@@ -33,13 +18,12 @@ import me.zhengjie.utils.PageResult;
 import me.zhengjie.modules.payment.service.dto.PayDepositDto;
 
 /**
-* @website https://eladmin.vip
-* @author mk
-* @date 2024-01-02
+* @author bryan
+* @date 2024-01-05
 **/
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "payment管理")
+@Api(tags = "deposit管理")
 @RequestMapping("/api/payDeposit")
 public class PayDepositController {
 
@@ -54,16 +38,16 @@ public class PayDepositController {
     }
 
     @GetMapping
-    @Log("查询payment")
-    @ApiOperation("查询payment")
+    @Log("查询deposit")
+    @ApiOperation("查询deposit")
     @PreAuthorize("@el.check('payDeposit:list')")
     public ResponseEntity<PageResult<PayDepositDto>> queryPayDeposit(PayDepositQueryCriteria criteria, Pageable pageable){
         return new ResponseEntity<>(payDepositService.queryAll(criteria,pageable),HttpStatus.OK);
     }
 
     @PostMapping
-    @Log("新增payment")
-    @ApiOperation("新增payment")
+    @Log("新增deposit")
+    @ApiOperation("新增deposit")
     @PreAuthorize("@el.check('payDeposit:add')")
     public ResponseEntity<Object> createPayDeposit(@Validated @RequestBody PayDeposit resources){
         payDepositService.create(resources);
@@ -71,8 +55,8 @@ public class PayDepositController {
     }
 
     @PutMapping
-    @Log("修改payment")
-    @ApiOperation("修改payment")
+    @Log("修改deposit")
+    @ApiOperation("修改deposit")
     @PreAuthorize("@el.check('payDeposit:edit')")
     public ResponseEntity<Object> updatePayDeposit(@Validated @RequestBody PayDeposit resources){
         payDepositService.update(resources);
@@ -80,8 +64,8 @@ public class PayDepositController {
     }
 
     @DeleteMapping
-    @Log("删除payment")
-    @ApiOperation("删除payment")
+    @Log("删除deposit")
+    @ApiOperation("删除deposit")
     @PreAuthorize("@el.check('payDeposit:del')")
     public ResponseEntity<Object> deletePayDeposit(@RequestBody Long[] ids) {
         payDepositService.deleteAll(ids);
